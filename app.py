@@ -1,8 +1,6 @@
 from parcv import parcv
 import re
 import json
-
-
 parser = parcv.Parser(pickle=True, load_pickled=True)
 
 

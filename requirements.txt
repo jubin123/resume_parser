@@ -1,3 +1,7 @@
+openai
+google-api-python-client 
+google-auth-httplib2 
+google-auth-oauthlib
 aiohttp==3.8.1
 aiosignal==1.2.0
 analytics-python==1.4.0
@@ -31,7 +35,7 @@ frozenlist==1.3.0
 ftfy==6.0.3
 future==0.18.2
 gdown==3.12.2
-gensim==4.1.2
+gensim
 gradio==2.7.5.2
 h11==0.13.0
 huggingface-hub==0.4.0
@@ -93,7 +97,7 @@ starlette==0.17.1
 tabulate==0.8.9
 threadpoolctl==3.1.0
 tokenizers==0.10.3
-torch==1.10.2
+torch
 tqdm==4.62.3
 transformers==4.15.0
 typing_extensions==4.0.1
@@ -107,8 +111,3 @@ wrapt==1.13.3
 xmltodict==0.12.0
 yarl==1.7.2
 zipp==3.7.0
-openai
-sqlite3
-google-api-python-client 
-google-auth-httplib2 
-google-auth-oauthlib

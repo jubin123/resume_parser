@@ -4,8 +4,6 @@ from flair.data import Sentence
 from flair.models import SequenceTagger
 import pickle
 
-
-
 class Models:
 
     def pickle_it(self, obj, file_name):
