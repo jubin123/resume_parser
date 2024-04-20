@@ -1,9 +1,10 @@
 import sqlite3
+import PyPDF2
 import pandas as pd
 import streamlit as st
-from sentence_transformers import SentenceTransformer
 import numpy as np
-
+from io import StringIO
+from sentence_transformers import SentenceTransformer
 from extract_from_folder import Parser
 
 # Load SentenceTransformer model
@@ -29,20 +30,24 @@ df = pd.read_sql_query("SELECT name, email, phone_number, previous_job_history, 
 # Close connection
 conn.close()
 
-
-# a = Parser()
-
 # Page layout
 page = st.sidebar.radio("Navigate", ["Show Entire DataFrame", "Apply Filters", "Rank Candidates"])
 
 # Show entire DataFrame
 if page == "Show Entire DataFrame":
-    uploaded_files = st.file_uploader("Upload zip file", accept_multiple_files=True)
-    for uploaded_file in uploaded_files:
-        bytes_data = uploaded_file.read()
-        st.write("filename:", uploaded_file.name)
-        st.write(bytes_data)
-    # a = Parser(uploaded_files)
+    # upload folder
+    uploaded_files = st.file_uploader("Upload multiple resumes", accept_multiple_files=True)
+    if uploaded_files is not None:
+        for uploaded_file in uploaded_files:
+            # pdf_content = uploaded_file.read()
+            stringio = StringIO(uploaded_file.getvalue().decode("latin-1"))
+            string_data = stringio.read()
+            st.write(string_data)
+            # bytes_data = uploaded_file.getvalue()
+            # parser = Parser(bytes_data)
+            # df = parser.create_df(uploaded_file)
+            # st.write(df)
+
     st.title('Resume Data - Entire DataFrame')
     st.write(df)
 

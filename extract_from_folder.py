@@ -1,13 +1,14 @@
 import re
 import os
 import spacy
+import pandas as pd
 from pyresparser import ResumeParser
 from pdfminer.high_level import extract_text
 from spacy.matcher import Matcher
 
 class Parser:
-    def __init__(self, folder_path):
-        self.folder_path = folder_path
+    def __init__(self, text):
+        self.text = text
 
     def extract_text_from_pdf(self, pdf_path):
         return extract_text(pdf_path)
@@ -58,33 +59,50 @@ class Parser:
 
         return None
     
-    def create_df(self):
-        resume_paths=[]
-        for resume in os.listdir(self.folder_path):
-            resume_path = f"{self.folder_path}/{resume}"
-            resume_paths.append(resume_path)
+    def create_df(self, bytess):
+        # resume_paths=[]
+        # for resume in os.listdir(self.folder_path):
+        #     resume_path = f"{folder_path}/{resume}"
+        #     resume_paths.append(resume_path)
 
-        columns = ['Resume', 'Name', 'Contact', 'Email', 'Skills', 'Education']
+        columns = ['Name', 'Contact', 'Email', 'Skills', 'Education']
         df = pd.DataFrame(columns=columns)
 
-        for resume_path in resume_paths:
-            text = self.extract_text_from_pdf(resume_path)
-            data = ResumeParser(resume_path).get_extracted_data()
+        # for resume_path in resume_paths:
+            # text = self.extract_text_from_pdf(resume_path)
+            # data = ResumeParser(resume_path).get_extracted_data()
 
-            resume_path = resume_path
-            name = self.extract_name(text)
-            contact_number = self.extract_contact_number_from_resume(text)
-            email = self.extract_email_from_resume(text)
-            extracted_skills = data['skills']
-            extracted_education = data['degree']
-            new_data = {
-                'Resume': resume_path,
+            # resume_path = resume_path
+            # name = self.extract_name(text)
+            # contact_number = self.extract_contact_number_from_resume(text)
+            # email = self.extract_email_from_resume(text)
+            # extracted_skills = data['skills']
+            # extracted_education = data['degree']
+            # new_data = {
+            #     'Resume': resume_path,
+            #     'Name': name,
+            #     'Contact': contact_number,
+            #     'Email': email,
+            #     'Skills': extracted_skills,
+            #     'Education': extracted_education
+            # }
+            # df = df.append(new_data, ignore_index=True)
+
+        data = ResumeParser(bytess).get_extracted_data()
+
+        # resume_path = bytess
+        name = self.extract_name(self.text)
+        contact_number = self.extract_contact_number_from_resume(self.text)
+        email = self.extract_email_from_resume(self.text)
+        extracted_skills = data['skills']
+        extracted_education = data['degree']
+        new_data = {
                 'Name': name,
                 'Contact': contact_number,
                 'Email': email,
                 'Skills': extracted_skills,
                 'Education': extracted_education
-            }
-            df = df.append(new_data, ignore_index=True)
+        }
+        df = df._append(new_data, ignore_index=True)
 
         return df
