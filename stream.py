@@ -32,6 +32,7 @@ page = st.sidebar.radio("Navigate", ["Show Entire DataFrame", "Apply Filters", "
 
 # Show entire DataFrame
 if page == "Show Entire DataFrame":
+    uploaded_files = st.file_uploader("Upload zip file", accept_multiple_files=True)
     st.title('Resume Data - Entire DataFrame')
     st.write(df)
 
