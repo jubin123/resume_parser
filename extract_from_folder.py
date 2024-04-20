@@ -61,7 +61,7 @@ class Parser:
     def create_df(self):
         resume_paths=[]
         for resume in os.listdir(self.folder_path):
-            resume_path = f"{folder_path}/{resume}"
+            resume_path = f"{self.folder_path}/{resume}"
             resume_paths.append(resume_path)
 
         columns = ['Resume', 'Name', 'Contact', 'Email', 'Skills', 'Education']

@@ -4,6 +4,8 @@ import streamlit as st
 from sentence_transformers import SentenceTransformer
 import numpy as np
 
+from extract_from_folder import Parser
+
 # Load SentenceTransformer model
 model_name = "bert-base-nli-mean-tokens"
 model = SentenceTransformer(model_name)
@@ -27,12 +29,20 @@ df = pd.read_sql_query("SELECT name, email, phone_number, previous_job_history, 
 # Close connection
 conn.close()
 
+
+# a = Parser()
+
 # Page layout
 page = st.sidebar.radio("Navigate", ["Show Entire DataFrame", "Apply Filters", "Rank Candidates"])
 
 # Show entire DataFrame
 if page == "Show Entire DataFrame":
     uploaded_files = st.file_uploader("Upload zip file", accept_multiple_files=True)
+    for uploaded_file in uploaded_files:
+        bytes_data = uploaded_file.read()
+        st.write("filename:", uploaded_file.name)
+        st.write(bytes_data)
+    # a = Parser(uploaded_files)
     st.title('Resume Data - Entire DataFrame')
     st.write(df)
 
